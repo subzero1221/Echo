@@ -1,0 +1,43 @@
+{
+  "name": "rentcarrendy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.735.0",
+    "@aws-sdk/s3-request-presigner": "^3.735.0",
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-session": "^1.18.0",
+    "google-auth-library": "^9.13.0",
+    "googleapis": "^140.0.1",
+    "helmet": "^7.1.0",
+    "jwa": "^2.0.0",
+    "jws": "^4.0.0",
+    "mongoose": "^8.5.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.10.1",
+    "nodemon": "^3.1.4",
+    "openai": "^4.98.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "sharp": "^0.33.5",
+    "socket.io": "^4.8.1",
+    "stripe": "^16.8.0",
+    "validator": "^13.12.0",
+    "xss-clean": "^0.1.4"
+  }
+}
