@@ -38,10 +38,10 @@ const server = http.createServer(app); // ⬅️ Use raw HTTP server
 initSocket(server); // ✅ Start socket server before everything
 
 app.use(express.json());
-console.log("CORS origin on Render:", process.env.FRONTEND_URL);
+
 app.use(
   cors({
-    origin:process.env.FRONTEND_URL,
+    origin: "https://echonext.onrender.com",
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE"],
   })
