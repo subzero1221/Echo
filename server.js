@@ -41,7 +41,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://echonext.onrender.com",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE"],
   })
