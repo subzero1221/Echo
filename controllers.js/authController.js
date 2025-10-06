@@ -117,7 +117,7 @@ exports.signout = catchAsync(async (req, res, next) => {
 
   res.clearCookie("connect.sid", {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "None",
     secure: process.env.NODE_ENV === "production",
     path: "/",
   });
