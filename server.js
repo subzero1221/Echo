@@ -51,7 +51,7 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: "random_secret_justcheckongifthishitworks",
     resave: false,
     saveUninitialized: false,
     cookie: {
