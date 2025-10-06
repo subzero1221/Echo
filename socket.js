@@ -9,7 +9,7 @@ let io;
 const initSocket = (server) => {
   io = new Server(server, {
     cors: {
-      origin: process.env.FRONTEND_URL,
+      origin: "https://echonext.onrender.com",
       credentials: true,
     },
   });
