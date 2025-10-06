@@ -17,12 +17,12 @@ exports.sharePost = catchAsync(async (req, res, next) => {
 
   const post = await Post.findById(postId).populate("createdBy");
 
-  console.log("Sharing post:", post);
-
-  if (post.createdBy._id.toString() === userId.toString())
-    return next(
-      new AppError("You can not share your post, check them on your wall")
-    );
+  if (post.createdBy._id.toString() === userId.toString()) {
+    return res.status(400).json({
+      status: "fail",
+      message: "You can not share your post, check them on your wall",
+    });
+  }
 
   const sharedPost = await Share.create({
     post: postId,

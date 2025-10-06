@@ -7,7 +7,8 @@ const Comment = require("../models/commentsModel");
 exports.addReply = catchAsync(async (req, res, next) => {
   const { content } = req.body;
   const { commentId } = req.params;
-  console.log(content);
+
+  console.log("Entering reply!", commentId);
 
   const newReply = await Reply.create({
     content: content,
@@ -15,9 +16,12 @@ exports.addReply = catchAsync(async (req, res, next) => {
     commentId: commentId,
   });
 
-  const comment = await Comment.findById(commentId).select("createdBy, postId");
+  console.log("Creating comment!");
+  const comment = await Comment.findById(commentId).select("createdBy postId");
 
   const recipientId = comment.createdBy.toString();
+
+  console.log("REPLIES RECIPIENT:", recipientId);
 
   req.notificationInfo = {
     recipient: recipientId,
@@ -35,7 +39,6 @@ exports.addReply = catchAsync(async (req, res, next) => {
 
 exports.getReplies = catchAsync(async (req, res, next) => {
   const { commentId } = req.params;
-  console.log("commentId", commentId);
 
   const replies = await Reply.find({ commentId }).populate("createdBy");
 

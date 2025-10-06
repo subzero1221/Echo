@@ -63,11 +63,10 @@ exports.uploadVideoToS3 = async (file) => {
 };
 
 exports.getImageFromS3 = async (imageKey) => {
+  if (!imageKey) return null;
   if (imageKey === "userDefault.jpg") return null;
   if (imageKey === "") return null;
   if (imageKey === "Anonymous") return "Anonymous.jpg";
-
-  console.log("imagekey:", imageKey);
 
   const getObjectParams = {
     Bucket: bucketName,
@@ -113,7 +112,6 @@ exports.deleteImageFromS3 = async (imageKey) => {
     Bucket: bucketName,
     Key: imageKey,
   };
-  console.log("Deleting Image");
 
   const command = new DeleteObjectCommand(params);
   await s3.send(command);

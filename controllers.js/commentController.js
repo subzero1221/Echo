@@ -8,7 +8,6 @@ const Post = require("../models/postModel");
 exports.addComment = catchAsync(async (req, res, next) => {
   const { content } = req.body;
   const { postId } = req.params;
-  console.log(content);
 
   const newComment = await Comment.create({
     content: content,
@@ -58,7 +57,6 @@ exports.getComments = catchAsync(async (req, res, next) => {
 exports.getComment = catchAsync(async (req, res, next) => {
   const { commentId } = req.params;
   const comment = await Comment.findById(commentId).populate("createdBy");
-  console.log(comment);
 
   const commentWithUser = await comment.createdBy.getImageUrl();
 
@@ -97,7 +95,6 @@ exports.deleteComment = catchAsync(async (req, res, next) => {
 exports.handleCommentVotes = catchAsync(async (req, res, next) => {
   const { vote } = req.body;
   const { commentId } = req.params;
-  console.log("Registring votes", vote, commentId);
 
   const comment = await Comment.findById(commentId);
   if (!comment) return next(new AppError("Post not found", 404));

@@ -113,6 +113,24 @@ exports.getPosts = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getMyPosts = catchAsync(async (req, res, next) => {
+  const userId = req.user._id;
+
+  const posts = await Post.find({ createdBy: userId })
+    .sort({ createdAt: -1 })
+    .populate("createdBy")
+    .populate("community", "name communityType members")
+    .lean();
+
+  const postsWithImages = await Promise.all(posts.map(mapPostWithImages));
+  console.log("MY POSTS", postsWithImages);
+
+  res.status(200).json({
+    status: "success",
+    postsWithImages,
+  });
+});
+
 exports.deletePost = catchAsync(async (req, res, next) => {
   const userId = req.user._id;
   const { postId } = req.params;
@@ -185,8 +203,6 @@ exports.getPendingCommunityPosts = catchAsync(async (req, res, next) => {
     community: communityId,
     isApproved: false,
   }).populate("createdBy", "nickName");
-
-  console.log(pendingPosts.map((p) => p.createdBy));
 
   res.status(200).json({
     status: "success",
@@ -333,8 +349,6 @@ exports.getFilteredPosts = catchAsync(async (req, res) => {
   const { category, tags, page = 1, sortBy } = req.query;
   const limit = 10;
   const skip = (page - 1) * limit;
-
-  console.log("TAGS: ", tags);
 
   let query = {};
 

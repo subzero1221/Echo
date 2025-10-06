@@ -14,12 +14,23 @@ exports.savePost = catchAsync(async (req, res, next) => {
     return next(new AppError("Post is already saved on your wall"));
   }
 
+  const post = await Post.findById(postId).populate("createdBy");
+
+  console.log("Saving Post", post);
+
+  if (post.createdBy._id.toString() === userId.toString()) {
+    return res.status(400).json({
+      status: "fail",
+      message: "You can not save your post, check them on your wall",
+    });
+  }
+
   const savedPost = await Save.create({
     post: postId,
     userId,
   });
 
-  res.status(201).json({
+  return res.status(201).json({
     status: "success",
     savedPost,
   });
@@ -35,7 +46,8 @@ exports.getSavedPosts = catchAsync(async (req, res, next) => {
       return post;
     })
   );
- 
+
+  console.log("savedPosts:", savedPosts);
 
   res.status(200).json({
     status: "success",

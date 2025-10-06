@@ -71,6 +71,11 @@ mongoose
   .then(() => console.log("✅ Database connected!"))
   .catch((err) => console.error(`❌ Database connection error: ${err}`));
 
+app.use("/test", (req, res, next) => {
+  console.log("Incoming request:", req.method, req.url);
+  res.status(200).json({ status: "seucces", test: "In action" });
+});
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/posts", postRouter);

@@ -134,7 +134,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) return next(new AppError("User with this email not found", 404));
-  console.log("USER With that email:", user);
 
   const resetToken = await user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
@@ -180,19 +179,11 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     .update(resetToken)
     .digest("hex");
 
-  console.log(
-    "DATA FOR PASS UPDATING:",
-    resetToken,
-    hashedToken,
-    password,
-    passwordConfirm
-  );
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });
 
-  console.log("USER UPDATING PASSWORD:", user);
   if (!user) {
     return next(new AppError("Token is invalid or expired", 400));
   }

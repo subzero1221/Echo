@@ -11,11 +11,21 @@ const Reaction = require("../models/reactionModel");
 exports.sendNotification = catchAsync(async (req, res, next) => {
   const { recipient, type, message, about, postId } = req.notificationInfo;
   const sender = req.user._id;
+  console.log(
+    "Recipient ID:",
+    recipient.toString(),
+    "senderID:",
+    sender.toString()
+  );
+
+  if (recipient.toString() === sender.toString()) {
+    return res.status(200).json({
+      status: "success",
+    });
+  }
 
   const io = getIO();
   const onlineUsers = getOnlineUsers();
-
-  console.log("📨 Sending notification to", recipient);
 
   await Notification.create({
     recipient,

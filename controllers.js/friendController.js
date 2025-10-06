@@ -123,14 +123,10 @@ exports.getFriends = catchAsync(async (req, res, next) => {
     $or: [{ requester: userId }, { recipient: userId }],
   }).populate("requester recipient");
 
-  console.log("Friends:", friends);
-
   const myFriends = friends.map((friend) => {
     const isRequester = friend.requester._id.toString() === userId.toString();
     return isRequester ? friend.recipient : friend.requester;
   });
-
-  console.log("My friends :", myFriends);
 
   res.status(200).json({
     status: "success",

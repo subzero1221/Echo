@@ -13,6 +13,7 @@ const {
   getPendingCommunityPosts,
   approvePost,
   declinePost,
+  getMyPosts,
 } = require("../controllers.js/postController");
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -20,7 +21,8 @@ const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
 
 router.post("/createPost", checkAuth, upload.single("photo"), createPost);
-router.get("/getPosts/:postId?", checkStatus, getPosts);
+router.get("/getPosts/:postId?", getPosts);
+router.get("/getMyPosts", checkAuth, getMyPosts);
 router.get("/getCommunityPosts/:communityId", checkStatus, getCommunityPosts);
 router.get(
   "/getPendingCommunityPosts/:communityId",

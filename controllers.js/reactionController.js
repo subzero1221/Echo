@@ -48,7 +48,6 @@ exports.addReaction = catchAsync(async (req, res, next) => {
 
 exports.getReactions = catchAsync(async (req, res, next) => {
   const { postId } = req.params;
-  console.log("returning reactions:", postId);
 
   const reactions = await Reaction.aggregate([
     {
@@ -83,8 +82,6 @@ exports.getReactions = catchAsync(async (req, res, next) => {
   ]);
 
   if (!reactions) return next(new AppError("Reactions not found", 404));
-
-  console.log(reactions);
 
   res.status(200).json({
     status: "success",
