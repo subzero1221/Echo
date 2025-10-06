@@ -63,6 +63,15 @@ app.use(
   })
 );
 
+app.get("/test-cookie", (req, res) => {
+  res.cookie("test", "123", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+  res.json({ ok: true });
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
