@@ -339,6 +339,14 @@ exports.getTopics = catchAsync(async (req, res, next) => {
     })
   );
 
+
+  res.cookie("test_cookie", "works123", {
+    httpOnly: true,      // can't be read by JS
+    secure: true,        // must be true in production (HTTPS only)
+    sameSite: "none",    // allows cross-origin
+    maxAge: 1000 * 60 * 60 * 24, // 1 day
+  });
+
   res.status(200).json({
     status: "success",
     posts: postsWithImgs,
