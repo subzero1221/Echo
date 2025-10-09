@@ -94,7 +94,13 @@ exports.signin = catchAsync(async (req, res, next) => {
   await new Promise((resolve, reject) => {
     req.login(user, (err) => {
       if (err) return reject(new AppError("Login process failed", 500));
-      resolve();
+
+      // 🟢 Touch session so cookie gets set
+      req.session.userId = user._id;
+      req.session.save((saveErr) => {
+        if (saveErr) return reject(saveErr);
+        resolve();
+      });
     });
   });
 
